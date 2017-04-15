@@ -1,16 +1,13 @@
 <template>
   <div class="Stars">
-    <div class="star-bg">
-        <v-touch v-for="n in MAX_STAR" class="star-gray" @tap="updateStar(n)" @swipe="updateStar(n)"></v-touch>
+    <div class="star-group" >
+      <div class="star-gray-line star-line">
+          <v-touch v-for="n in MAX_STAR" class="star star-gray" @tap="updateStar(n)"></v-touch>
+      </div>
+      <div class="star-light-line star-line">
+          <v-touch v-for="n in stars" class="star star-light" @tap="updateStar(n)"></v-touch>  
+      </div>  
     </div>
-    <div class="star-star">
-        <v-touch v-for="n in stars" class="star" @tap="updateStar(n)"></v-touch>  
-    </div>
-    <v-touch 
-      v-on:swipeleft="onswipe"
-    >
-      1111111111111111111
-    </v-touch>
   </div>
 </template>
 
@@ -27,22 +24,10 @@ const Stars = {
     };
   },
   methods: {
-    addStart() {
-      ++this.stars;
-    },
-
-    minusStart() {
-      --this.stars;
-    },
-
     updateStar(number) {
       this.stars = number;
-    },
-    onswipe() {
-      console.log('swipe')
     }
   }
-  
 };
 
 export default Stars;
@@ -52,31 +37,55 @@ export default Stars;
 <style scoped>
   .Stars {
     position: relative;
+    height: 19px;
   }
 
-  .star-star {
+  .Stars .star-group {
+    position: relative;
+    width: 140px;
+    height: 19px;
+    margin: 0 auto;
+  }
+
+  .Stars .star-group .star-line {
     position: absolute;
+/*    text-align: left;
+    left: 50%;
     top: 0;
-    left: 0;
+    transform: translate3D(-50%, 0, 0);*/
   }
 
-  .star {
+  .Stars .star-group .star-gray-line {
+    z-index: 10;
+  }
+  .Stars .star-group .star-light-line {
+    z-index: 11;
+  }
+
+  .Stars .star {
     display: inline-block;
     width: 19px;
     height: 19px;
-    background: url('/static/img/star.png') no-repeat center center;
+    margin-right: 9px;
     background-size: 19px 19px;
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 
-  .star-gray {
-    display: inline-block;
-    width: 19px;
-    height: 19px;
-    background: url('/static/img/star-gray.png') no-repeat center center;
-    background-size: 19px 19px;
+  .Stars .star:last-child {
+    margin-right: 0;
   }
 
-  .star-big {
+  .Stars .star-light {
+    background-image: url('/static/img/star.png');
+  }
+
+  .Stars .star-gray {
+    background-image: url('/static/img/star-gray.png');
+
+  }
+
+  .Stars .star-big {
     display: inline-block;
     width: 26px;
     height: 26px;
@@ -84,7 +93,7 @@ export default Stars;
     background-size: 26px 26px;
   }
 
-  .star-gray-big {
+  .Stars .star-gray-big {
     display: inline-block;
     width: 26px;
     height: 26px;

@@ -118,14 +118,12 @@ export default Introduction;
 <style scoped>
   @import '../../assets/style/reset.css';
 
-  body {
-    overflow: hidden;
-  }
 
   #Introduction {
     position: relative;    
     height: 100%;
     width: 100%;
+    background: white;
   }
 
   .banner-wrapper {
