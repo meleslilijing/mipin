@@ -1,5 +1,5 @@
 <template>
-  <div id="Introduction">
+  <div id="Introduction" class="page">
     <v-touch
       v-on:swipeleft="onSwipeRight"
       v-on:swiperight="onSwipeLeft"
@@ -90,9 +90,9 @@ const Introduction = {
     }
   },
   beforeMount() {
-    const height = window.innerHeight;
-    const body = doc.body || doc.getElementsByTagName('body')[0];
-    body.style.height = height + 'px';
+    // const height = window.innerHeight;
+    // const body = doc.body || doc.getElementsByTagName('body')[0];
+    // body.style.height = height + 'px';
   },
   mounted() {
     // set banner-viewport width
@@ -117,7 +117,6 @@ export default Introduction;
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @import '../../assets/style/reset.css';
-
 
   #Introduction {
     position: relative;    

@@ -1,5 +1,5 @@
 <template>
-  <div id="Evaluation">
+  <div id="Evaluation" class="page">
   	<User></User>
     <div class="content">
       
@@ -21,10 +21,18 @@
       </div>
 
       <div class="text-area">
-        <textarea placeholder="我一直相对你说: "></textarea>
+        <textarea placeholder="我一直相对你说: " v-model="message"></textarea>
+        <div class="toast"></div>
       </div>
-
+11: {{message}}
+disabled: {{disabled}}
+      <div class="content-footer">
+        <p class="submit-tips">评分、评价均为匿名</p>
+        <a href="" class="submit-link" :disabled="message">匿名提交评价</a>
+      </div>
     </div>
+
+    
   	
   </div>
 </template>
@@ -52,11 +60,21 @@ const Evaluation = {
           { text: '眼睛漂亮，人也好看' },
           { text: '很贪吃' }
         ],
-      msg: '',
+      message: '',      // textarea 内容
       msgPlaceHolder: '我一直想对你说',
       msgPrompt: 'TA还没有评价，赶快评价成为第一位评价者。',
       msgTags: ['我喜欢你', '晚上能早点睡吗...'],
     };
+  },
+  // watch: {
+  //   disabled() {
+  //     this.disabled = this.message.length === 0 ? 'disabled' : 'nonono'
+  //   }
+  // },
+  computed: {
+    disabled() {
+      return this.message.length === 0 ? 'disabled' : 'nonono'
+    }
   },
   components: {
   	User,
@@ -73,7 +91,9 @@ export default Evaluation;
   @import '../../assets/style/reset.css';
 
   .content {
+    position: relative;
     overflow: auto;
+    height: 500px;
     background-color: white;
     margin-top: 10px;
     text-align: center;
@@ -142,6 +162,44 @@ export default Evaluation;
 
   .content .text-area textarea {
     height: 133px;
+  }
+
+  .content .toast {
+    position: absolute;
+    top: 23px;
+    left: 8px;
+    width: 181px;
+    height: 36px;
+    background: url('/static/img/textarea-toast.png') no-repeat center center;
+    background-size: 100%;
+  }
+
+  .content > .content-footer {
+    position: absolute;
+    overflow: auto;
+    width: 100%;
+    bottom: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
+  .content-footer .submit-tips {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .3);
+  }
+
+  .content-footer .submit-link {
+    display: block; 
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    font-size: 15px;
+    background: yellow;
+  }
+
+  .content-footer .submit-link[disabled='disabled'] {
+    background: gray;
   }
 
 </style>

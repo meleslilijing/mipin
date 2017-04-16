@@ -34,7 +34,6 @@ export default User;
     position: relative;
     height: 85px;
     background: white;
-    margin-top: 17px;
     border: 1px solid #ccc;
     border-left-width: 0;
     border-right-width: 0;

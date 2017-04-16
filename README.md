@@ -21,6 +21,7 @@
 ## Page
 介绍下载页： index
 评价详情添加： evaluation
+评价详情结果： evaluation_result
 
 ## TODO
 1. 阅读 postcss-px2rem 移动端适配插件文档

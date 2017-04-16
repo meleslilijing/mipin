@@ -40,6 +40,10 @@ abbr, acronym {
     border: 0;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
 /*------------------------ base ------------------------*/
 
 body {
@@ -57,4 +61,8 @@ textarea {
   background-color: #eee;
   box-sizing: border-box;
   padding: 9px 8px;
+}
+
+.page {
+  overflow: auto;
 }
