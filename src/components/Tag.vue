@@ -1,5 +1,5 @@
 <template>
-  <div class="Tag">
+  <div class="Tag Tag-default">
     <span>{{ message }}</span>
   </div>
 </template>
@@ -24,13 +24,19 @@ export default Tag;
   .Tag {
     position: relative;
     display: inline-block;
-    margin-right: 10px;
+    box-sizing: border-box;
     float: left;
-    padding: 12px 8px;
+    height: 26px;
+    line-height: 26px;
+    margin-right: 10px;
+    padding: 0 10px;
     font-size: 12px;
-    color: rgba(0, 0, 0, .6);
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 22px;
+    color: rgba(0, 0, 0, .8);
+    border-radius: 13px;
+  }
+
+  .Tag-default {
+    border: 1px solid #e5e5e5;
   }
 
   .Tag:after {

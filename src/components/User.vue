@@ -32,7 +32,7 @@ export default User;
 <style scoped>
   .User {
     position: relative;
-    height: 85px;
+    height: 258px;
     background: white;
     border: 1px solid #ccc;
     border-left-width: 0;
@@ -43,19 +43,18 @@ export default User;
   /*头像*/
   .user-avatar {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 60px;
+    left: 60px;
     border-radius: 50%;
     border: 1px solid #ccc;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100%;
-    /*background-color: teal;*/
   }
 
   .user-avatar-big {
-    width: 50px;
-    height: 50px;
+    width: 146px;
+    height: 146px;
     background-image: url('/static/img/user-avatar-def-big.png');
   }
 
@@ -69,28 +68,33 @@ export default User;
     position: absolute;
     right: 0;
     bottom: 0;
-    padding: .2em;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 5px;
     color: white;
-    background-color: brown;
+    background-color: #fcbf2e;
     font-size: 12px;
     font-style: normal;
-    border-radius: 6px;
+    border-radius: 9px;
+    border: 1px solid #e9a432;
   }
 
   .user-info {
     position: absolute;
-    left: 90px;
-    top: 20px;
+    left: 135px;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
   }
 
   .user-info .user-info-nickname {
-    font-size: 15px;
+    font-size: 45px;
+    font-weight: bold;
     color: rgba(0, 0, 0, 0.8);
   }
 
   .user-info .user-info-msg {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.3);
-    margin-top: 9px;
+    font-size: 33px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 27px;
   }
 </style>

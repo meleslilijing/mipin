@@ -123,7 +123,7 @@ module.exports = {
     // loaders: {
     //   css: ExtractTextPlugin.extract('style-loader','css-loader!less-loader')
     // },
-    postcss: [
+    postcss: [ /*@2*/
       /**
        * [baseDpr description]
        * @type {Number}
@@ -131,13 +131,13 @@ module.exports = {
        *  font-size: 28px  / *px* / 转换为（data-dpr）
        *  border: 1px solid #ddd / *no* / 不进行 rem 转换
        */
-      // require('postcss-px2rem')({
-      //   // baseDpr: 2, // base device pixel ratio (default: 2)
-      //   // threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
-      //   // remVersion: true, // whether to generate rem version (default: true)
-      //   // remPrecision: 6, // rem precision (default: 6)
-      //   remUnit: 75 // rem unit value (default: 75)
-      // }),
+      require('postcss-px2rem')({
+        baseDpr: 1, // base device pixel ratio (default: 2)
+        // threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
+        // remVersion: false, // whether to generate rem version (default: true)
+        // remPrecision: 6, // rem precision (default: 6)
+        remUnit: 108 // rem unit value (default: 75)
+      }),
       require('autoprefixer')({
         browsers: ['Firefox >= 20', '> 5%', 'last 2 versions']
       })
