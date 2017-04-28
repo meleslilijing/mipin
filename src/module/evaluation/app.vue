@@ -15,17 +15,22 @@
         <div class="desc">赞美一下</div>
       </div>
       
-      <div class="tags-box">
+      <!-- <div class="tags-box">
         <ul>
           <li v-for="(item, index) in tags">
-            <Tag :message="item.text"></Tag>
+            <Tag 
+              :message="item.text" 
+              :type="item.type">
+            </Tag>
           </li>
         </ul>
-      </div>
+      </div> -->
+
+      <Tags :tags="tags"></Tags>
 
       <div class="text-area">
         <textarea placeholder="我一直相对你说: " v-model="message"></textarea>
-        <div class="toast"></div>
+        <div v-if="!message.length" class="toast"></div>
       </div>
 
       <div class="content-footer">
@@ -40,6 +45,7 @@
 // 评价页
 import User from 'components/User';
 import Stars from 'components/Stars';
+import Tags from 'components/Tags';
 import Tag from 'components/Tag';
 
 const Evaluation = {
@@ -53,11 +59,11 @@ const Evaluation = {
       tags: [
         { text: '美丽大方' },
         { text: '自拍达人' },
-        { text: '眼睛漂亮' },
-        { text: '温柔' },
-        { text: '眼睛漂亮' },
-        { text: '眼睛漂亮，人也好看' },
-        { text: '很贪吃' }
+        { text: '眼睛漂亮', type:'private' },
+        { text: '有责任心', type:'private' },
+        { text: '温柔体贴' },
+        { text: '美丽大方' },
+        { text: '换一换' }
       ],
       message: '',      // textarea 内容
       msgPlaceHolder: '我一直想对你说',
@@ -71,6 +77,7 @@ const Evaluation = {
   components: {
   	User,
   	Stars,
+    Tags,
     Tag
   }
 };
@@ -82,7 +89,7 @@ export default Evaluation;
 <style scoped>
   @import '../../assets/style/reset.css';
   .header {
-    margin-top: 24px;
+    margin-top: 17px;
   }
 
   .content {
@@ -112,6 +119,7 @@ export default Evaluation;
   .diving-line .desc {
     font-size: 11px;
     padding: 0 16px;
+    color: rgba(0, 0, 0, .7);
   }
 
   .diving-line .desc::before {
@@ -122,7 +130,7 @@ export default Evaluation;
     vertical-align: middle;
     width: 66px;
     height: 1px;
-    background-color: #1a0000;
+    background-color: #eee;
   }
 
   .diving-line .desc::after {
@@ -133,7 +141,7 @@ export default Evaluation;
     vertical-align: middle;
     width: 66px;
     height: 1px;
-    background-color: #1a0000;
+    background-color: #eee;
   }
   .content > .tags-box {
     overflow: auto; 
@@ -149,6 +157,8 @@ export default Evaluation;
 
   .content .text-area textarea {
     height: 133px;
+    border-color: #f5f5f5;
+    padding: 9px 8px;
   }
 
   .content .toast {
@@ -173,7 +183,7 @@ export default Evaluation;
   .content-footer .submit-tips {
     text-align: center;
     font-size: 12px;
-    color: rgba(0, 0, 0, .3);
+    color: rgba(0, 0, 0, .5);
   }
 
   .content-footer .submit-link {
@@ -181,12 +191,14 @@ export default Evaluation;
     width: 100%;
     height: 42px;
     line-height: 42px;
-    font-size: 15px;
-    background: yellow;
+    margin-top: 10px;
+    font-size: 16px;
+    background: #ffd800;
+    border-radius: 3px;
   }
 
   .content-footer .submit-link[disabled='disabled'] {
-    background: gray;
+    background: #ebb600;
   }
 
 </style>

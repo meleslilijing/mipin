@@ -11,7 +11,7 @@
             <img :src="s.banner" alt="">
             <p class="title">给ta一个惊喜</p>
             <p class="sub-title">说出平日不敢说的话，做最真实的自己</p>
-            <a class="download">
+            <a class="download" href="http://fir.im/g2p5">
               <span>立即下载秘评</span>
             </a>
             <div class="controller">
@@ -40,7 +40,7 @@ const Introduction = {
         {banner: 'image_jieshao_4.png', controller: 'jindu_page_4.png'},
       ],
       activeIndex: 1,
-      pageWidth: 414
+      pageWidth: window.innerWidth
     };
   },
   computed: {
@@ -159,11 +159,12 @@ export default Introduction;
   #Introduction .title {
     margin-top: 18px;
     font-size: 22px;
+    font-weight: bold;
     text-align: center;
   }
 
   #Introduction .sub-title {
-    margin-top: 17px;
+    margin-top: 7px;
     font-size: 14px;
     color: #959595;
     text-align: center;
@@ -176,20 +177,16 @@ export default Introduction;
     margin: 46px 60px 0;
     text-align: center;
     background-color: #f1cf0e;
-    -webkit-border-radius: 77px;
     border-radius: 77px;
-    -moz-border-radius: 77px;
-    -ms-border-radius: 77px;
-    -o-border-radius: 77px;
-  }
-
-  .download span {
     font-size: 16px;
   }
 
+  .download span {
+  }
+
   .banner-viewport .controller {
-    margin: 32px auto 0 auto;
-    width: 33%;
+    margin: 11px auto 0 auto;
+    width: 77px;
   }
 
 </style>

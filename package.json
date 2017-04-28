@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "jQuery": "^1.7.4",
     "vue": "^2.1.8",
     "vue-touch": "^2.0.0-beta.4"
   },

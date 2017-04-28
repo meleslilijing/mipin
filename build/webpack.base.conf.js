@@ -44,7 +44,8 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'jspath': path.resolve(__dirname, '../src/assets/js'),
       'config': path.resolve(__dirname, '../src/config/'),
-      'util': path.resolve(__dirname, '../src/util/')
+      'util': path.resolve(__dirname, '../src/util/'),
+
     }
   },
   resolveLoader: {
@@ -66,6 +67,10 @@ module.exports = {
     //   }
     // ],
     loaders: [
+      // {
+      //   test: require.resolve('jquery'),
+      //   loader: 'expose?jQuery!expose?$'
+      // },
       {
         test: /\.vue$/,
         loader: 'vue'
@@ -131,13 +136,13 @@ module.exports = {
        *  font-size: 28px  / *px* / 转换为（data-dpr）
        *  border: 1px solid #ddd / *no* / 不进行 rem 转换
        */
-      require('postcss-px2rem')({
-        baseDpr: 1, // base device pixel ratio (default: 2)
-        // threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
-        // remVersion: false, // whether to generate rem version (default: true)
-        // remPrecision: 6, // rem precision (default: 6)
-        remUnit: 108 // rem unit value (default: 75)
-      }),
+      // require('postcss-px2rem')({
+      //   baseDpr: 1, // base device pixel ratio (default: 2)
+      //   // threeVersion: false, // whether to generate @1x, @2x and @3x version (default: false)
+      //   // remVersion: false, // whether to generate rem version (default: true)
+      //   // remPrecision: 6, // rem precision (default: 6)
+      //   remUnit: 108 // rem unit value (default: 75)
+      // }),
       require('autoprefixer')({
         browsers: ['Firefox >= 20', '> 5%', 'last 2 versions']
       })

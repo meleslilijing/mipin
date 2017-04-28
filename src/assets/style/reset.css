@@ -49,7 +49,7 @@ a {
 body {
   -webkit-overflow-scrolling: auto;
   line-height: 1.5;
-  background: rgba(0, 0, 0, .1);
+  background: #f4f4f4;
 }
 
 textarea {
