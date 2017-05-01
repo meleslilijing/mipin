@@ -23,17 +23,17 @@ language	String	语言
  * 弹幕页
  * 通过手机号查询用户
  */
-router.get('/account/queryUserInfoByNumber', function(req, res) {
+router.post('/account/queryUserInfoByNumber', function(req, res) {
 	var json = {
     "errCode": 0,
     "result": {
-      "userType": "", // 用户类型(如：未注册用户、已注册用户、VIP用户)
-      "userId": "",    // 用户ID
-      "nickName": "",   // 用户昵称
-      "phoneNumber": "", // 用户手机号
-      "avatarUrl": "",   // 用户头像
-      "rateScore": "",  // 用户分数
-      "rateDetailScore": ""   // 用户详细分数
+      "userType": "已注册用户", // 用户类型(如：未注册用户、已注册用户、VIP用户)
+      "userId": "0112",    // 用户ID
+      "nickName": "陈敏娜",   // 用户昵称
+      "phoneNumber": "17090000000", // 用户手机号
+      "avatarUrl": "/static/avatar/1.png",   // 用户头像
+      "rateScore": "5",  // 用户分数
+      "rateCount": "121"   // 用户详细分数
     },
     "errMsg": ""
   };
@@ -45,7 +45,7 @@ router.get('/account/queryUserInfoByNumber', function(req, res) {
  * 评价页面
  * 通过手机号查询评价标签 
  */
-router.get('/rate/queryRateTagsByNumber', function(req, res) {
+router.post('/rate/queryRateTagsByNumber', function(req, res) {
 	var json = {
     "errCode": 0,
     "result": [
@@ -90,7 +90,7 @@ router.get('/rate/queryRateTagsByNumber', function(req, res) {
  * 评价页面
  * 提交评价
  */
-router.get('/rate/submitRateContent', function(req, res) {
+router.post('/rate/submitRateContent', function(req, res) {
 	var json = {
     "errCode": 0,
     "result": {

@@ -1,16 +1,14 @@
 <template>
   <div class="Stars">
     <div class="star-group" >
-      <div class="star-gray-line star-line">
-          <v-touch v-for="n in MAX_STAR" class="star star-gray" @tap="updateStar(n)">
-            <Star :color="bg" size="size" ></Star>
-          </v-touch>
-      </div>
-      <div class="star-light-line star-line">
-          <v-touch v-for="n in stars" class="star star-light" @tap="updateStar(n)">
-            <Star :color="'light'" size="size" ></Star>
-          </v-touch>  
-      </div>  
+      <Star v-for="n in 5" 
+        :color="background" 
+        :size="size" 
+        v-on:updateActivedCount="updateActivedCount"
+        :index="n"
+        :actived="n - 1 < score"
+      >
+      </Star>
     </div>
   </div>
 </template>
@@ -21,35 +19,32 @@ import Star from 'components/Star';
 
 const Stars = {
   name: 'Stars',
-  props: ['bg', 'size'],
+  props: ['defaultScore', 'background', 'size'],
   data() {
     return {
-    	stars: 2,
       MAX_STAR: 5,
-      text: '几乎完美'
+      text: '几乎完美',
+      score: this.defaultScore || 0
     };
   },
-  methods: {
-    updateStar(number) {
-      this.stars = number;
-    }
-  },
   computed: {
-    // styleObj() {
-    //   const type = this.type;
-
-    //   if(type === 'big') {
-    //     return {
-    //       width: '15px',
-    //       height: '15px',
-    //       marginRight: '17px'
-    //     }
-    //   }
-    //   return null
+    // activedCount() {
+    //   console.log('score: ', this.score);
+    //   return this.score || 0;
     // }
   },
   components: {
     Star
+  },
+  methods: {
+    updateActivedCount(score) {
+      const self = this;
+      this.score = score;
+
+      setTimeout(() => {
+        self.$emit('callback', this.score);
+      }, 1000);
+    }
   }
 };
 
@@ -60,29 +55,26 @@ export default Stars;
 <style scoped>
   .Stars {
     position: relative;
-    height: 19px;
+    /*height: 19px;*/
   }
 
   .Stars .star-group {
     position: relative;
-    width: 140px;
-    height: 19px;
+    width: 200px;
+    text-align: center;
+    height: 26px;
     margin: 0 auto;
   }
 
   .Stars .star-group .star-line {
-    position: absolute;
-/*    text-align: left;
-    left: 50%;
-    top: 0;
-    transform: translate3D(-50%, 0, 0);*/
   }
 
-  .Stars .star-group .star-gray-line {
+  .Stars .star-group .star-bg-line {
     z-index: 10;
   }
   .Stars .star-group .star-light-line {
     z-index: 11;
+    position: absolute;
   }
 
   .Stars .star {
@@ -92,21 +84,5 @@ export default Stars;
 
   .Stars .star:last-child {
     margin-right: 0;
-  }
-
-  .Stars .star-big {
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-    background: url('/static/img/star-big.png') no-repeat center center;
-    background-size: 26px 26px;
-  }
-
-  .Stars .star-gray-big {
-    display: inline-block;
-    width: 26px;
-    height: 26px;
-    background: url('/static/img/star-gray-big.png') no-repeat center center;
-    background-size: 26px 26px;
   }
 </style>

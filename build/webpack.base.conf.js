@@ -45,7 +45,8 @@ module.exports = {
       'jspath': path.resolve(__dirname, '../src/assets/js'),
       'config': path.resolve(__dirname, '../src/config/'),
       'util': path.resolve(__dirname, '../src/util/'),
-
+      'jquery': path.resolve(__dirname, '../node_modules/jquery/src/jquery'),
+      'directives': path.resolve(__dirname, '../src/directives')
     }
   },
   resolveLoader: {
@@ -112,6 +113,9 @@ module.exports = {
     ]
   },
   plugins: [
+    // new webpack.DefinePlugin({
+    //   'NODE_ENV': 
+    // }),
     // 提取公共模块
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendors', // 公共模块的名称

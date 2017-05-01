@@ -1,11 +1,12 @@
 <template>
   <div class="User">
     <div class="user-avatar user-avatar-big">
-      <i class="user-score">{{score}}</i>
+      <img v-show="!!avatarUrl" :src="avatarUrl" alt="用户头像">
+      <i class="user-score">{{rateScore}}</i>
     </div>
     <div class="user-info">
       <p class="user-info-nickname">{{ nickName }}</p>
-      <p class="user-info-msg">已收到<span>{{ times }}</span>次评分</p>  
+      <p class="user-info-msg">已收到<span>{{ rateCount }}</span>次评分</p>  
     </div>
   </div>
 </template>
@@ -15,14 +16,13 @@
 
 const User = {
   name: 'User',
+  props: ['nickName', 'rateCount', 'rateScore', 'avatarUrl'],
   data() {
-    return {
-      nickName: '陈敏娜',
-      times: 121,				// 次数
-      score: 4.2
-    };
+    return {};
   },
-  
+  created() {
+    console.log('avatarUrl: ', this.avatarUrl)
+  }
 };
 
 export default User;
@@ -34,7 +34,7 @@ export default User;
     position: relative;
     height: 86px; /*149*/
     background: white;
-    border: 1px solid #eaeaea;
+    /*border: 1px solid #eaeaea;*/
     border-left-width: 0;
     border-right-width: 0;
     line-height: 1;
@@ -50,6 +50,10 @@ export default User;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100%;
+  }
+
+  .user-avatar img {
+    width: 100%;
   }
 
   .user-avatar-big {

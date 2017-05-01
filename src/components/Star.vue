@@ -1,9 +1,10 @@
 <template>
-  <div class="Star" 
-    v-bind:class="colorCls"
-    v-bind:style="styleObj"
-  >
-  </div>
+    <div class="Star" 
+      :class="[colorCls, sizeCls, activedCls]"
+    >
+      <v-touch @tap="updateActivedStars" style="height: 100%"></v-touch>
+    </div>  
+  
 </template>
 
 <script>
@@ -11,22 +12,32 @@
 
 const Star = {
   name: 'Star',
-  props: ['color', 'width'],
+  props: ['color', 'size', 'index', 'actived'],
   data() {
-    return {}
+    return {
+    }
   },
   computed: {
     colorCls() {
-      return this.color
-    },
-    styleObj() {
-      if(!this.width) return null;
-
-      const w = this.width + 'px';
-      return {
-        width: w,
-        height: w,
+      if(this.color === 'blue') {
+        return 'star-color-blue';
       }
+      return 'star-color-gray';
+    },
+    sizeCls() {
+      if(this.size === 'big') {
+        return 'star-size-big'
+      }
+    },
+    activedCls() {
+      if(this.actived) {
+        return 'star-actived';
+      }
+    }
+  },
+  methods: {
+    updateActivedStars() {
+      this.$emit('updateActivedCount', this.index)
     }
   }
 };
@@ -46,15 +57,26 @@ export default Star;
     background-size: 100%;
   }
 
-  .light {
-    background-image: url('/static/img/star.png');
+  .star-actived {
+    background-image: url('/static/img/star.png')!important;
   }
 
-  .gray {
+  .star-color-gray {
     background-image: url('/static/img/star-gray.png');
   }
 
-  .blue {
+  .star-color-blue {
     background-image: url('/static/img/star-blue.png');
+  }
+
+  .star-size-big {
+    width: 26px;
+    height: 26px;
+    margin-right: 17px;
+    background-size: 100%;
+  }
+
+  .Star:last-child {
+    margin-right: 0;
   }
 </style>
