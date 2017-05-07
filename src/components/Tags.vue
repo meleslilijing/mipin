@@ -1,39 +1,79 @@
 <template>
   <div class="Tags">
-    <div v-for="tag in tags">
-      <Tag :text="tag.text"></Tag>
-    </div>
-    <!-- {{tags}} -->
+    <Tag v-for="(tag, index) in dataSource"
+      :text="tag" 
+      :index="index" 
+      :actived="_checkActive(index)"
+      v-on:updateActivedSet="updateActivedSet"
+    >
+    </Tag>
   </div>
 </template>
 
 <script>
 import Tag from './Tag';
-console.log
+
+/*
+  eg..
+      tags: [
+        { text: '美丽大方' },
+        { text: '自拍达人' },
+        { text: '眼睛漂亮' },
+        { text: '有责任心' },
+        { text: '温柔体贴' },
+        { text: '美丽大方' },
+        { text: '换一换' }
+      ],
+ */
 const Tags = {
   name: 'Tags',
-	props: ['tags'],
+	props: ['dataSource', 'actived'],
   data() {
     return {
+      MAX_ACTIVATE: 3,
+      // activeSet: new Set(this.dataSource.actived)
+      activeSet: new Set(this.actived)
     };
   },
-  computed: {
-
+  beforeUpdate() {
+    this._upAcitveSet();
+    console.log('beforeUpdate this.actived: ', this.actived);
+    console.log('beforeUpdate this.activeSet: ', this.activeSet);
   },
   created() {
-    console.log('mouted tags: ', this.tags)
+    // console.log('this.dataSource: ', this.dataSource);
+    // console.log('this.actived: ', this.actived);
   },
   methods: {
-    // handleClick() {
-    //   this.clicked = 'Tag-clicked'
-    // }
+    _checkActive(index) {
+      return this.activeSet.has(index);
+    },
+    _upAcitveSet() {
+      this.activeSet = new Set(this.actived);
+    },
+    updateActivedSet(index) {
+      const activeSet = this.activeSet;
+      const actived = activeSet.has(index);
+
+      // 已激活
+      if (actived) {
+        activeSet.delete(index);
+      }
+      else {
+        const size = activeSet.size;
+        if (size < this.MAX_ACTIVATE) {
+          activeSet.add(index);
+        }
+      }
+
+      this.activeSet = new Set([...activeSet]);
+      this.$emit('tagsCallback', [...activeSet]);
+    }
   },
   components: {
     Tag
   }
 };
-
-console.log(Tags.props.tags)
 
 export default Tags;
 </script>
@@ -43,6 +83,8 @@ export default Tags;
   .Tags {
     overflow: auto;
     margin-top: 20px;
+    text-align: center;
+    width: 100%;
   }
 
 </style>

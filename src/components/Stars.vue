@@ -42,9 +42,9 @@ const Stars = {
       this.score = score;
 
       setTimeout(() => {
-        self.$emit('callback', this.score);
+        self.$emit('starsCallback', this.score);
       }, 1000);
-    }
+    },
   }
 };
 

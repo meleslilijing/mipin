@@ -1,9 +1,7 @@
 <template>
-  <!-- <v-touch @tap="handleClick"> -->
-    <div class="Tag Tag-default" :class="clicked">
-      <span>{{ text }}</span>
-    </div>  
-  <!-- </v-touch> -->
+  <v-touch @tap="handleClick" class="Tag Tag-default" :class="activedCls">
+    <span>{{ text }}</span>
+  </v-touch>
 </template>
 
 <script>
@@ -11,17 +9,21 @@
 // type: default private
 const Tag = {
   name: 'Tag',
-	props: ['text'],
+	props: ['text', 'actived', 'index'],
   data() {
     return {
-      clicked: ''
     };
   },
-  // methods: {
-  //   handleClick() {
-  //     this.clicked = 'Tag-clicked'
-  //   }
-  // }
+  computed: {
+    activedCls() {
+      return (this.actived ? 'Tag-clicked' : '');
+    }
+  },
+  methods: {
+    handleClick() {
+      this.$emit('updateActivedSet', this.index);
+    }
+  }
 };
 
 export default Tag;
@@ -33,10 +35,8 @@ export default Tag;
     position: relative;
     display: inline-block;
     box-sizing: border-box;
-    float: left;
-    width: 70px;
     height: 26px;
-    line-height: 26px;
+    line-height: 24px;
     margin-right: 10px;
     margin-bottom: 10px;
     padding: 0 10px;
@@ -51,6 +51,7 @@ export default Tag;
 
   .Tag-clicked {
     background-color: #1191e0;
+    border-color: #1191e0;
     color: white;
   }
 

@@ -22,6 +22,7 @@ language	String	语言
 /**
  * 弹幕页
  * 通过手机号查询用户
+ * phoneNumber    手机号
  */
 router.post('/account/queryUserInfoByNumber', function(req, res) {
 	var json = {
@@ -44,6 +45,7 @@ router.post('/account/queryUserInfoByNumber', function(req, res) {
 /**
  * 评价页面
  * 通过手机号查询评价标签 
+ * phoneNumber    手机号
  */
 router.post('/rate/queryRateTagsByNumber', function(req, res) {
 	var json = {
@@ -52,32 +54,32 @@ router.post('/rate/queryRateTagsByNumber', function(req, res) {
     	{
           "rate": "0",                          // 评级对应的数字
           "title": "人品很不错",           // 评级对应的标题
-          "tags": "帅哥\001土豪\001神经质"  // 标签列表，以\001分隔
+          "tags": "帅哥\\001土豪\\001神经质"  // 标签列表，以\001分隔
       },
       {
           "rate": "1",                          // 评级对应的数字
           "title": "人品很不错",           // 评级对应的标题
-          "tags": "帅哥\001土豪\001神经质"  // 标签列表，以\001分隔
+          "tags": "帅哥\\001土豪\\001神经质"  // 标签列表，以\001分隔
       },
       {
           "rate": "2",                          // 评级对应的数字
           "title": "人品很不错",           // 评级对应的标题
-          "tags": "帅哥\001土豪\001神经质"  // 标签列表，以\001分隔
+          "tags": "帅哥\\001土豪\\001神经质"  // 标签列表，以\001分隔
       },
       {
           "rate": "3",                          // 评级对应的数字
           "title": "人品很不错",           // 评级对应的标题
-          "tags": "帅哥\001土豪\001神经质"  // 标签列表，以\001分隔
+          "tags": "帅哥\\001土豪\\001神经质"  // 标签列表，以\001分隔
       },
       {
           "rate": "4",                          // 评级对应的数字
           "title": "人品很不错",           // 评级对应的标题
-          "tags": "帅哥\001土豪\001神经质"  // 标签列表，以\001分隔
+          "tags": "帅哥\\001土豪\\001神经质"  // 标签列表，以\001分隔
       },
       {
           "rate": "5",                          // 评级对应的数字
           "title": "人品很不错",           // 评级对应的标题
-          "tags": "帅哥\001土豪\001神经质"  // 标签列表，以\001分隔
+          "tags": "帅哥\\001土豪\\001神经质"  // 标签列表，以\001分隔
       }
 		],
     "errMsg": ""
@@ -89,6 +91,13 @@ router.post('/rate/queryRateTagsByNumber', function(req, res) {
 /**
  * 评价页面
  * 提交评价
+ * raterNumber  评价者手机号
+ * rateeNumber  被评价者手机号
+ * rateeName    被评价者姓名
+ * rate         评级
+ * tags         标签列表，以\001分隔
+ * comment      评论内容
+ * sendMms      是否发送短信
  */
 router.post('/rate/submitRateContent', function(req, res) {
 	var json = {

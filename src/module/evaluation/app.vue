@@ -7,26 +7,15 @@
     <div class="content">
       
       <div class="star-box">
-        <Stars></Stars>
-        <p class="star-desc">几乎完美</p>
+        <Stars :defaultScore="rateScore" v-on:starsCallback="starsCallback"></Stars>
+        <p class="star-desc">{{ tags.title }}</p>
       </div>
 
       <div class="diving-line">
         <div class="desc">赞美一下</div>
       </div>
-      
-      <!-- <div class="tags-box">
-        <ul>
-          <li v-for="(item, index) in tags">
-            <Tag 
-              :message="item.text" 
-              :type="item.type">
-            </Tag>
-          </li>
-        </ul>
-      </div> -->
 
-      <Tags :tags="tags"></Tags>
+      <Tags :dataSource="tags.tags" :actived="actived" v-on:tagsCallback="tagsCallback"></Tags>
 
       <div class="text-area">
         <textarea placeholder="我一直相对你说: " v-model="message"></textarea>
@@ -35,8 +24,13 @@
 
       <div class="content-footer">
         <p class="submit-tips">评分、评价均为匿名</p>
-        <a href="" class="submit-link" :disabled="!message.length">匿名提交评价</a>
+        <a class="submit-link" :disabled="!message.length">
+          <v-touch @tap="submit">
+            匿名提交评价
+          </v-touch>
+        </a>
       </div>
+
     </div>
   </div>
 </template>
@@ -46,7 +40,10 @@
 import User from 'components/User';
 import Stars from 'components/Stars';
 import Tags from 'components/Tags';
-import Tag from 'components/Tag';
+
+import { Api } from '../../utils'
+
+const DEFAULT_RATE = 1;
 
 const Evaluation = {
   name: 'Evaluation',
@@ -54,31 +51,139 @@ const Evaluation = {
     return {
     	userImg: '../a.png',
       nickName: '陈敏娜',
-      frequency: 121,				// 次数
-      stars: 4,						// 分数
-      tags: [
-        { text: '美丽大方' },
-        { text: '自拍达人' },
-        { text: '眼睛漂亮', type:'private' },
-        { text: '有责任心', type:'private' },
-        { text: '温柔体贴' },
-        { text: '美丽大方' },
-        { text: '换一换' }
+      frequency: 121,
+      rateScore: DEFAULT_RATE,  // 星星数量
+      rateTags: [
+        {
+            "rate": "0",                   // 评级对应的数字
+            "title": "人品一般般",           // 评级对应的标题
+            "tags": [
+              '帅哥',
+            ]  
+        },
+        {
+            "rate": "1",                          
+            "title": "人品一般",
+            "tags": [
+              '帅哥',
+              '土豪',
+            ]
+        },
+        {
+            "rate": "2",                          
+            "title": "人品还行",
+            "tags": [
+              '帅哥',
+              '土豪',
+              '神经质'
+            ]
+        },
+        {
+            "rate": "3",                          
+            "title": "人品不错",
+            "tags": [
+              '帅哥',
+              '土豪',
+              '神经质',
+              '温柔'
+            ]
+        },
+        {
+            "rate": "4",                          
+            "title": "人品很不错",
+            "tags": [
+              '帅哥',
+              '土豪',
+              '神经质',
+              '温柔',
+              '大方'
+            ]
+        },
+        {
+            "rate": "5",
+            "title": "人品很好",
+            "tags": [
+              '帅哥',
+              '土豪',
+              '神经质',
+              '温柔',
+              '大方',
+              '人品非常好'
+            ]
+        }
       ],
+      actived: [], 
       message: '',      // textarea 内容
       msgPlaceHolder: '我一直想对你说',
       msgPrompt: 'TA还没有评价，赶快评价成为第一位评价者。',
-      msgTags: ['我喜欢你', '晚上能早点睡吗...'],
+      msgTags: ['我喜欢你', '晚上能早点睡吗...']
     };
   },
+
   computed: {
-    
+    // 激活标签 String
+    activeTagsString() {
+      const self = this;
+
+      const list = this.actived;
+
+      return this.actived
+        .map(index => self.tags.tags[index])
+        .join('\\001');
+    },
+    // tags数据
+    tags() {
+      const self = this;
+      const tags = {};
+
+      // 选取当前的 star 对应的数据
+      const current = this.rateTags.filter(rateTag => {
+        return rateTag.rate == self.rateScore;
+      })[0];
+
+      return current;
+    }
   },
+
+  methods: {
+    queryRateTagsByNumber() {
+      return Api.queryRateTagsByNumber({
+          phoneNumber: NativeInterface.phoneNumber
+        })
+        .then(response => {
+          
+        })
+    },
+    submit() {
+      console.log('submit activeTags: ', this.activeTagsString);
+
+      Api.submitRateContent({
+          phones: NativeInterface.phoneNumber
+        })
+        .then(response => {
+          console.log('submitRateContent response: ', response);
+        })
+    },
+    starsCallback(stars) {
+      this.rateScore = stars;
+      this.actived = [];
+    },
+    tagsCallback(tags) {
+      console.log('tags click: ', tags);
+      this.actived = tags;
+    },
+
+  },
+
+  created() {
+    this.queryRateTagsByNumber();
+    console.log(this.actived)
+  },
+  
   components: {
   	User,
   	Stars,
     Tags,
-    Tag
   }
 };
 

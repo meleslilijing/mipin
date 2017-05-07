@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueTouch from 'vue-touch';
+import Vuex from 'vuex'
 import App from './app.vue';
 
 VueTouch.registerCustomEvent('doubletap', {

@@ -79,18 +79,27 @@ const request = (url, type='GET') => {
 /**
  * 弹幕页
  * 通过手机号查询用户
+ * phoneNumber    手机号
  */
 export const queryUserInfoByNumber = request('/account/queryUserInfoByNumber', 'POST');
 
 /**
  * 评价页面
  * 通过手机号查询评价标签 
+ * phoneNumber    手机号
  */
 export const queryRateTagsByNumber = request('/rate/queryRateTagsByNumber', 'POST');
 
 /**
  * 评价页面
  * 提交评价
+ * raterNumber  评价者手机号
+ * rateeNumber  被评价者手机号
+ * rateeName    被评价者姓名
+ * rate         评级
+ * tags         标签列表，以\001分隔
+ * comment      评论内容
+ * sendMms      是否发送短信
  */
 export const submitRateContent = request('/rate/submitRateContent', 'POST');
 

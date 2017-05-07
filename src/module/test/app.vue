@@ -1,37 +1,35 @@
 <template>
   <div id="TEST" class="page">
     测试页面
-    <div>
-      <p>small</p>
-      <Star :color="'gray'"></Star>
-      <Star :color="'blue'"></Star>
-      <Star :color="'light'"></Star>
-    </div>
-    <div>
-      <p>big</p>
-      <Star :color="'gray'"></Star>
-      <Star :color="'blue'"></Star>
-      <Star :color="'light'" :width="100"></Star>
-    </div>
+    <Tags :tags="tags"></Tags>
   </div>
 </template>
 
 <script>
 // 评价页
 import Star from 'components/Star';
+import Tags from 'components/Tags';
 
 const TEST = {
   name: 'TEST',
   data() {
     return {
-      
+      tags: [
+        '美丽大方',
+        '自拍达人',
+        '眼睛漂亮1111',
+        '有责任心',
+        '温柔体贴温柔体贴温柔体贴温柔体贴',
+        '美丽大方',
+        '换一换'
+      ]
     };
   },
   computed: {
     
   },
   components: {
-  	Star
+  	Tags
   }
 };
 
@@ -43,9 +41,9 @@ export default TEST;
   @import '../../assets/style/reset.css';
 
   #TEST {
-    width: 100%;
+    width: 50%;
     height: 100%;
-    background: brown;
+    background: #ccc;
   }
 
 </style>
