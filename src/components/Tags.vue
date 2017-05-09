@@ -4,7 +4,7 @@
       :text="tag" 
       :index="index" 
       :actived="_checkActive(index)"
-      v-on:updateActivedSet="updateActivedSet"
+      v-on:tagsCallback="tagsCallback"
     >
     </Tag>
   </div>
@@ -27,18 +27,13 @@ import Tag from './Tag';
  */
 const Tags = {
   name: 'Tags',
-	props: ['dataSource', 'actived'],
+	props: ['dataSource', 'activeSet', 'tagsCallback'],
   data() {
     return {
-      MAX_ACTIVATE: 3,
+      // MAX_ACTIVATE: 3,
       // activeSet: new Set(this.dataSource.actived)
-      activeSet: new Set(this.actived)
+      // activeSet: new Set(this.actived)
     };
-  },
-  beforeUpdate() {
-    this._upAcitveSet();
-    console.log('beforeUpdate this.actived: ', this.actived);
-    console.log('beforeUpdate this.activeSet: ', this.activeSet);
   },
   created() {
     // console.log('this.dataSource: ', this.dataSource);
@@ -48,27 +43,27 @@ const Tags = {
     _checkActive(index) {
       return this.activeSet.has(index);
     },
-    _upAcitveSet() {
-      this.activeSet = new Set(this.actived);
-    },
-    updateActivedSet(index) {
-      const activeSet = this.activeSet;
-      const actived = activeSet.has(index);
+    // _upAcitveSet() {
+    //   this.activeSet = new Set(this.actived);
+    // },
+    // updateActivedSet(index) {
+      // const activeSet = this.activeSet;
+      // const actived = activeSet.has(index);
 
-      // 已激活
-      if (actived) {
-        activeSet.delete(index);
-      }
-      else {
-        const size = activeSet.size;
-        if (size < this.MAX_ACTIVATE) {
-          activeSet.add(index);
-        }
-      }
+      // // 已激活
+      // if (actived) {
+      //   activeSet.delete(index);
+      // }
+      // else {
+      //   const size = activeSet.size;
+      //   if (size < this.MAX_ACTIVATE) {
+      //     activeSet.add(index);
+      //   }
+      // }
 
-      this.activeSet = new Set([...activeSet]);
-      this.$emit('tagsCallback', [...activeSet]);
-    }
+      // this.activeSet = new Set([...activeSet]);
+      // this.$emit('tagsCallback', [...activeSet]);
+    // }
   },
   components: {
     Tag

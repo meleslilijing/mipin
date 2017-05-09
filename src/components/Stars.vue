@@ -41,9 +41,7 @@ const Stars = {
       const self = this;
       this.score = score;
 
-      setTimeout(() => {
-        self.$emit('starsCallback', this.score);
-      }, 1000);
+      self.$emit('starsCallback', this.score);
     },
   }
 };

@@ -21,7 +21,7 @@ const Tag = {
   },
   methods: {
     handleClick() {
-      this.$emit('updateActivedSet', this.index);
+      this.$emit('tagsCallback', this.index);
     }
   }
 };

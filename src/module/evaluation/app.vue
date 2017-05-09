@@ -1,7 +1,12 @@
 <template>
   <div id="Evaluation" class="page">
     <div class="header">
-      <User></User>
+      <User 
+        :nickName="user.nickName" 
+        :rateCount="user.rateCount" 
+        :rateScore="user.rateScore"
+        :avatarUrl="user.avatarUrl"
+        ></User>
     </div>
   	
     <div class="content">
@@ -15,16 +20,16 @@
         <div class="desc">赞美一下</div>
       </div>
 
-      <Tags :dataSource="tags.tags" :actived="actived" v-on:tagsCallback="tagsCallback"></Tags>
+      <Tags :dataSource="tags.tags" :activeSet="activeSet" :tagsCallback="tagsCallback"></Tags>
 
       <div class="text-area">
-        <textarea placeholder="我一直相对你说: " v-model="message"></textarea>
-        <div v-if="!message.length" class="toast"></div>
+        <textarea placeholder="我一直相对你说: " v-model="comment"></textarea>
+        <div v-if="!comment.length" class="toast"></div>
       </div>
 
       <div class="content-footer">
         <p class="submit-tips">评分、评价均为匿名</p>
-        <a class="submit-link" :disabled="!message.length">
+        <a class="submit-link" :disabled="!comment.length">
           <v-touch @tap="submit">
             匿名提交评价
           </v-touch>
@@ -41,17 +46,21 @@ import User from 'components/User';
 import Stars from 'components/Stars';
 import Tags from 'components/Tags';
 
-import { Api } from '../../utils'
+import { Api, Location } from '../../utils'
 
-const DEFAULT_RATE = 1;
+const DEFAULT_RATE = 0;
+const RATEE_NUMBER = ''; // 被评价者手机号 怎么获得
 
 const Evaluation = {
   name: 'Evaluation',
   data() {
     return {
-    	userImg: '../a.png',
-      nickName: '陈敏娜',
-      frequency: 121,
+      user: {
+        avatarUrl: '',
+        nickName: '陈敏娜',
+        rateCount: 121,
+        rateScore:"0"  
+      },
       rateScore: DEFAULT_RATE,  // 星星数量
       rateTags: [
         {
@@ -112,22 +121,23 @@ const Evaluation = {
             ]
         }
       ],
-      actived: [], 
-      message: '',      // textarea 内容
-      msgPlaceHolder: '我一直想对你说',
-      msgPrompt: 'TA还没有评价，赶快评价成为第一位评价者。',
-      msgTags: ['我喜欢你', '晚上能早点睡吗...']
+      MAX_ACTIVATE: 3,
+      activeSet: new Set(), 
+      comment: ''      // textarea 内容
     };
   },
 
   computed: {
+    // actived() {
+    //   return [...this.activeSet];
+    // },
     // 激活标签 String
     activeTagsString() {
       const self = this;
 
-      const list = this.actived;
+      const list = [...this.activeSet];
 
-      return this.actived
+      return list
         .map(index => self.tags.tags[index])
         .join('\\001');
     },
@@ -144,40 +154,102 @@ const Evaluation = {
       return current;
     }
   },
-
   methods: {
-    queryRateTagsByNumber() {
-      return Api.queryRateTagsByNumber({
+    _setRateScore(rateScore) {
+      this.rateScore = rateScore;
+      this.activeSet = new Set();
+    },
+    queryUserInfoByNumber() {
+      const self = this;
+
+      return Api.queryUserInfoByNumber({
+          // 被评价者的手机号
           phoneNumber: NativeInterface.phoneNumber
         })
         .then(response => {
-          
+          console.log('queryUserInfoByNumber response: ', response);
+
+            const {
+              avatarUrl,
+              nickName,
+              rateScore,
+              rateCount,
+
+              userType, // 暂未使用
+              userId, // 暂未使用
+              phoneNumber, // 暂未使用
+            } = response;
+
+            self.user.avatarUrl = avatarUrl;
+            self.user.nickName = nickName;
+            self.user.rateCount = rateCount;
+            self.user.rateScore = rateScore;
+        })
+    },
+    queryRateTagsByNumber() {
+      const self = this;
+
+      return Api.queryRateTagsByNumber({
+          // 被评价者的手机号
+          phoneNumber: NativeInterface.phoneNumber
+        })
+        .then(response => {
+          console.info('queryRateTagsByNumber response：', response);
+
+
         })
     },
     submit() {
-      console.log('submit activeTags: ', this.activeTagsString);
+      const self = this;
 
-      Api.submitRateContent({
-          phones: NativeInterface.phoneNumber
-        })
-        .then(response => {
-          console.log('submitRateContent response: ', response);
+      const params = {
+        raterNumber: NativeInterface.phoneNumber,  // 评价者手机号
+        rateeNumber: 'test-rateeNumber',  // 被评价者手机号
+        rateeName: 'test-rateeName',      // 被评价者姓名
+        rate: self.rateScore,
+        tags: self.activeTagsString,
+        comment: self.comment,
+        sendMms: true, // 是否发送短信
+        phones: NativeInterface.phoneNumber
+      }
+
+      Api.submitRateContent(params)
+        .then(result => {
+          const { beforeRateDetailScore, afterRateDetailScore, rateCount } = result;
+
+          Location.redirect.evaluation_result({
+            beforeRateDetailScore, 
+            afterRateDetailScore,
+            rateCount
+          });
         })
     },
     starsCallback(stars) {
-      this.rateScore = stars;
-      this.actived = [];
+      this._setRateScore(stars);
     },
-    tagsCallback(tags) {
-      console.log('tags click: ', tags);
-      this.actived = tags;
-    },
+    tagsCallback(index) {
+      const activeSet = this.activeSet;
+      const actived = activeSet.has(index);
 
+      // 已激活
+      if (actived) {
+        activeSet.delete(index);
+      }
+      else {
+
+        const size = activeSet.size;
+        if (size < this.MAX_ACTIVATE) {
+          activeSet.add(index);
+        }
+      }
+
+      this.activeSet = new Set([...activeSet]);
+    }
   },
 
   created() {
-    this.queryRateTagsByNumber();
-    console.log(this.actived)
+    this.queryUserInfoByNumber(); // 查询用户信息
+    this.queryRateTagsByNumber(); // 查询用户标签
   },
   
   components: {

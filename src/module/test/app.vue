@@ -1,35 +1,26 @@
 <template>
   <div id="TEST" class="page">
     测试页面
-    <Tags :tags="tags"></Tags>
+    <Stars></Stars>
   </div>
 </template>
 
 <script>
 // 评价页
-import Star from 'components/Star';
-import Tags from 'components/Tags';
+import Stars from 'components/Stars';
 
 const TEST = {
   name: 'TEST',
   data() {
     return {
-      tags: [
-        '美丽大方',
-        '自拍达人',
-        '眼睛漂亮1111',
-        '有责任心',
-        '温柔体贴温柔体贴温柔体贴温柔体贴',
-        '美丽大方',
-        '换一换'
-      ]
+     
     };
   },
   computed: {
     
   },
   components: {
-  	Tags
+  	Stars
   }
 };
 

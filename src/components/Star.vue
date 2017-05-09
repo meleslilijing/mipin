@@ -55,6 +55,7 @@ export default Star;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100%;
+    margin-right: 10px;
   }
 
   .star-actived {

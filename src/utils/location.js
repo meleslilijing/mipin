@@ -24,7 +24,30 @@ export const unformatParams = () => {
 	return r;
 }
 
+// 页面跳转
+export const redirect = {
+	_getHref(name) {
+		const origin = window.location.origin;
+
+		const url = process.env.NODE_ENV === 'development' ? 
+			name + '.html' : 
+			name;
+
+		return origin + '/' + url;
+	},
+	danmu(params) {
+		window.location.href = this._getHref('danmu') + '?' + formatParams(params);
+	},
+	evaluation(params) {
+		window.location.href = this._getHref('evaluation') + '?' + formatParams(params);
+	},
+	evaluation_result(params) {
+		window.location.href = this._getHref('evaluation_result') + '?' + formatParams(params);
+	}
+};
+
 export default {
 	formatParams,
-	unformatParams
+	unformatParams,
+	redirect
 }

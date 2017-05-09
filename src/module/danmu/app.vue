@@ -18,7 +18,7 @@
       <Stars 
         background="blue" 
         size="big" 
-        v-on:callback="changeResultPage"
+        v-on:starsCallback="changeResultPage"
       ></Stars>
     </div>
 
@@ -139,21 +139,7 @@ const Danmu = {
         score: score
       }
 
-      const formatParams = Location.formatParams;
-
-      const origin = window.location.origin;
-      const pathname = (() => {
-          let r = '/evaluation_result'; 
-          if(process.env.NODE_ENV === 'development') {
-            r = r + '.html';
-          }
-          return r;
-        })(); 
-
-      const url = origin + pathname + '?' + formatParams(params);
-
-      window.location.href = url;
-
+      Location.redirect.evaluation(params);
     }
   }
 };

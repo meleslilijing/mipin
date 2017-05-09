@@ -14,6 +14,9 @@ window.BasicInterface = {
 
 window.NativeInterface = Object.assign(BasicInterface, {
 	phoneNumber: '12345678901'
+	// raterNumber: 'raterNumber',
+ //    rateeNumber: 'rateeNumber',
+ //    rateeName: 'rateeName'
 })
 
 export default {
